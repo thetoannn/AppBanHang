@@ -1,0 +1,31 @@
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.AppBanHang" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.AppBanHang" parent="Base.Theme.AppBanHang" />
+
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <!-- Customize your theme here -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- Shape Appearance for Rounded Corners -->
+    <style name="ShapeAppearanceOverlay.MaterialComponents.CardView.Rounded" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <!-- Custom Text Style -->
+    <style name="CustomTextStyle" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@android:color/holo_red_light</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+</resources>
