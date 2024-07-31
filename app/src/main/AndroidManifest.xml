@@ -59,7 +59,7 @@
             android:name=".activity.LaptopActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.DienThoaiActivity"
+            android:name=".activity.SanPhamActivity"
             android:exported="false" />
         <activity
             android:name=".activity.MainActivity"
