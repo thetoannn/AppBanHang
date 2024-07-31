@@ -38,7 +38,9 @@ public interface ApiBanHang {
             @Field("email") String email,
             @Field("pass") String pass,
             @Field("username") String username,
-            @Field("phone") String phone
+            @Field("phone") String phone,
+            @Field("uid") String uid
+
     );
 
     @POST("dangnhap.php")
@@ -93,7 +95,7 @@ public interface ApiBanHang {
             @Field("loai") int loai
     );
 
-    @POST("udpdatesp.php")
+    @POST("updatesp.php")
     @FormUrlEncoded
     Observable<MessageModel> updateSp(
             @Field("tensp") String tensp,
@@ -102,6 +104,13 @@ public interface ApiBanHang {
             @Field("mota") String mota,
             @Field("loai") int loai,
             @Field("id") int id
+    );
+
+    @POST("updatetoken.php")
+    @FormUrlEncoded
+    Observable<MessageModel> updateToken(
+            @Field("id") int id,
+            @Field("token") String token
     );
 
     @Multipart

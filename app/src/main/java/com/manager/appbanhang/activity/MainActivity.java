@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -24,6 +26,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.manager.appbanhang.R;
 import com.manager.appbanhang.adapter.LoaiSpAdapter;
 import com.manager.appbanhang.adapter.SanPhamMoiAdapter;
@@ -75,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             User user = Paper.book().read("user");
             Utils.user_current = user;
         }
-
+        getToken();
         Anhxa();
         ActionBar();
         
@@ -88,6 +93,30 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "Không có Internet, vui lòng kết nối", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void getToken() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnSuccessListener(new OnSuccessListener<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        if (!TextUtils.isEmpty(s)) {
+                            compositeDisposable.add(apiBanHang.updateToken(Utils.user_current.getId(), s)
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(
+                                            messageModel -> {
+
+                                            },
+                                            throwable -> {
+                                                Log.d("log", throwable.getMessage());
+                                            }
+                                    ));
+                        } else {
+
+                        }
+                    }
+                });
     }
 
     private void getEventClick() {
@@ -122,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
                     case 7:
                         // xoa key user
                         Paper.book().delete("user");
+                        FirebaseAuth.getInstance().signOut();
                         Intent dangxuat = new Intent(getApplicationContext(), DangNhapActivity.class);
                         startActivity(dangxuat);
                         finish();

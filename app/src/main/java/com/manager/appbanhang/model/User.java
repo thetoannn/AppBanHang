@@ -6,6 +6,7 @@ public class User {
     String pass;
     String username;
     String phone;
+    String uid;
 
     public int getId() {
         return id;
@@ -45,5 +46,13 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }
