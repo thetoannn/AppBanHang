@@ -75,7 +75,7 @@ public class QuanLyActivity extends AppCompatActivity {
                             }
                         },
                         throwable -> {
-                            Toast.makeText(getApplicationContext(), "Không kết nối được với server"+throwable.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Không kết nối được với server"+ throwable.getMessage(), Toast.LENGTH_LONG).show();
                         }
                 ));
     }
@@ -120,7 +120,7 @@ public class QuanLyActivity extends AppCompatActivity {
 
     private void suaSanPham() {
         Intent intent = new Intent(getApplicationContext(), ThemSanPhamActivity.class);
-        intent.putExtra("Sửa", sanPhamSuaXoa);
+        intent.putExtra("sua", sanPhamSuaXoa);
         startActivity(intent);
     }
 
@@ -145,7 +145,9 @@ public class QuanLyActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        super.onStop();
         EventBus.getDefault().unregister(this);
+        super.onStop();
     }
+
+
 }

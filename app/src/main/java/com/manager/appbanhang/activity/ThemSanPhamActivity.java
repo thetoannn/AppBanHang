@@ -64,7 +64,7 @@ public class ThemSanPhamActivity extends AppCompatActivity {
         initData();
 
         Intent intent = getIntent();
-        sanPhamSua = (SanPhamMoi) intent.getSerializableExtra("Sửa");
+        sanPhamSua = (SanPhamMoi) intent.getSerializableExtra("sua");
         if (sanPhamSua == null) {
             // them moi
             flag = false;
@@ -130,7 +130,7 @@ public class ThemSanPhamActivity extends AppCompatActivity {
         String str_mota = binding.mota.getText().toString().trim();
         String str_hinhanh = binding.hinhanh.getText().toString().trim();
         if (TextUtils.isEmpty(str_ten) || TextUtils.isEmpty(str_gia) || TextUtils.isEmpty(str_mota) || TextUtils.isEmpty(str_hinhanh) || loai == 0) {
-            Toast.makeText(getApplicationContext(), "Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Vui lòng nhập đủ thông tin", Toast.LENGTH_LONG).show();
         } else {
             compositeDisposable.add(apiBanHang.updateSp(str_ten, str_gia, str_hinhanh, str_mota, loai, sanPhamSua.getId())
                     .subscribeOn(Schedulers.io())
@@ -138,13 +138,13 @@ public class ThemSanPhamActivity extends AppCompatActivity {
                     .subscribe(
                             messageModel -> {
                                 if (messageModel.isSuccess()) {
-                                    Toast.makeText(getApplicationContext(), messageModel.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), messageModel.getMessage(), Toast.LENGTH_LONG).show();
                                 } else {
-                                    Toast.makeText(getApplicationContext(), messageModel.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), messageModel.getMessage(), Toast.LENGTH_LONG).show();
                                 }
                             },
                             throwable -> {
-                                Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_LONG).show();
                             }
                     ));
         }
@@ -164,7 +164,7 @@ public class ThemSanPhamActivity extends AppCompatActivity {
         String str_mota = binding.mota.getText().toString().trim();
         String str_hinhanh = binding.hinhanh.getText().toString().trim();
         if (TextUtils.isEmpty(str_ten) || TextUtils.isEmpty(str_gia) || TextUtils.isEmpty(str_mota) || TextUtils.isEmpty(str_hinhanh) || loai == 0) {
-            Toast.makeText(getApplicationContext(), "Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Vui lòng nhập đủ thông tin", Toast.LENGTH_LONG).show();
         } else {
             compositeDisposable.add(apiBanHang.insertSp(str_ten, str_gia, str_hinhanh, str_mota, (loai))
                     .subscribeOn(Schedulers.io())
@@ -172,13 +172,13 @@ public class ThemSanPhamActivity extends AppCompatActivity {
                     .subscribe(
                             messageModel -> {
                                 if (messageModel.isSuccess()) {
-                                    Toast.makeText(getApplicationContext(), messageModel.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), messageModel.getMessage(), Toast.LENGTH_LONG).show();
                                 } else {
-                                    Toast.makeText(getApplicationContext(), messageModel.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), messageModel.getMessage(), Toast.LENGTH_LONG).show();
                                 }
                             },
                             throwable -> {
-                                Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_LONG).show();
                             }
                     ));
         }
