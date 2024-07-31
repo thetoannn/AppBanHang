@@ -101,23 +101,26 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(String s) {
                         if (!TextUtils.isEmpty(s)) {
+//                            Log.d("Token", "Token: " + s); // In token ra console
                             compositeDisposable.add(apiBanHang.updateToken(Utils.user_current.getId(), s)
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(
                                             messageModel -> {
-
+                                                // Token updated successfully
+                                                Log.d("Token", "Token saved successfully");
                                             },
                                             throwable -> {
-                                                Log.d("log", throwable.getMessage());
+                                                Log.d("Token", "Failed to save token: " + throwable.getMessage());
                                             }
                                     ));
                         } else {
-
+                            Log.d("Token", "Received empty token");
                         }
                     }
                 });
     }
+
 
     private void getEventClick() {
         listViewManHinhChinh.setOnItemClickListener(new AdapterView.OnItemClickListener() {
