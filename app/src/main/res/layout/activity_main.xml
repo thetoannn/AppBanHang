@@ -17,27 +17,30 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/side_nav_bar"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbarmanhinhchinh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#ff00dfff"
+                android:background="@drawable/side_toolbar"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
-                app:title="Trang Chính">
+                app:title="Trang chủ"
+                app:titleTextColor="@color/white">
                 <LinearLayout
                     android:layout_gravity="right"
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="?attr/actionBarSize">
+
                     <ImageView
                         android:id="@+id/img_search"
                         android:paddingBottom="4dp"
                         android:layout_marginRight="15dp"
-                        android:src="@drawable/ic_search"
-                        android:layout_width="45dp"
+                        android:src="@drawable/ic_search_1"
+                        android:layout_width="37dp"
                         android:layout_height="?attr/actionBarSize"/>
 
                     <FrameLayout
@@ -53,7 +56,7 @@
                             android:layout_height="28dp"/>
                         <ImageView
                             android:layout_marginTop="15dp"
-                            android:src="@drawable/ic_cart_24"
+                            android:src="@drawable/ic_cart"
                             android:layout_width="35dp"
                             android:layout_height="35dp"/>
                     </FrameLayout>
@@ -69,38 +72,64 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#5992d2"
+
                 android:orientation="vertical" >
 
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="Sản phẩm mới nhất"
-                    android:textColor="#BD1212"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                <LinearLayout
+                    android:background="@drawable/side_toolbar"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/alexandria_bold"
+                        android:gravity="center"
+                        android:text="Sản phẩm mới nhất"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:orientation="horizontal"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp" />
             </LinearLayout>
-
         </LinearLayout>
+
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/navigationview"
             android:layout_gravity="start"
+            app:headerLayout="@layout/nav_header_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <ListView
-                android:layout_marginTop="10dp"
-                android:id="@+id/listviewmanhinhchinh"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_marginTop="30dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <include
+                        layout="@layout/nav_header_main"/>
+                </FrameLayout>
+                <ListView
+                    android:id="@+id/listviewmanhinhchinh"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
         </com.google.android.material.navigation.NavigationView>
 
     </androidx.drawerlayout.widget.DrawerLayout>

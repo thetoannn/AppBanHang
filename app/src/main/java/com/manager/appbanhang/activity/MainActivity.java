@@ -23,6 +23,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -146,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(donhang);
                         break;
                     case 6:
-
                         Intent quanli = new Intent(getApplicationContext(), QuanLyActivity.class);
                         startActivity(quanli);
                         finish();
@@ -234,10 +234,12 @@ public class MainActivity extends AppCompatActivity {
     private void Anhxa() {
         toolbar = findViewById(R.id.toolbarmanhinhchinh);
         viewFlipper = findViewById(R.id.viewflipper);
+
         recyclerViewManHinhChinh = findViewById(R.id.recyclerview);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
         recyclerViewManHinhChinh.setLayoutManager(layoutManager);
         recyclerViewManHinhChinh.setHasFixedSize(true);
+
         listViewManHinhChinh = findViewById(R.id.listviewmanhinhchinh);
         navigationView = findViewById(R.id.navigationview);
         drawerLayout = findViewById(R.id.drawerlayout);

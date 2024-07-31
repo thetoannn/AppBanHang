@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.manager.appbanhang.Interface.ItemClickListener;
 import com.manager.appbanhang.R;
 import com.manager.appbanhang.activity.ChiTietActivity;
@@ -81,7 +82,7 @@ public class SanPhamMoiAdapter extends RecyclerView.Adapter<SanPhamMoiAdapter.My
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener, View.OnLongClickListener {
         TextView txtgia, txtten;
-        ImageView imghinhanh;
+        RoundedImageView imghinhanh;
         private ItemClickListener itemClickListener;
 
         public MyViewHolder(@NonNull View itemView) {

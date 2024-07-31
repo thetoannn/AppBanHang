@@ -5,7 +5,7 @@
     android:layout_marginTop="10dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
-    app:cardCornerRadius="4dp"
+    app:cardCornerRadius="8dp"
     android:layout_width="160dp"
     android:layout_height="wrap_content">
     <FrameLayout
@@ -14,11 +14,14 @@
 
         <LinearLayout
             android:orientation="vertical"
+            android:padding="6dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <ImageView
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/itemsp_image"
                 android:src="@drawable/ic_media_24"
+                app:riv_corner_radius="14dp"
+                android:scaleType="centerCrop"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"/>
             <TextView

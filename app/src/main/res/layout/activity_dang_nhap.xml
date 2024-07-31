@@ -13,12 +13,12 @@
         android:text="@string/ng_nh_p"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:textColor="@color/color_text"
+        android:textColor="#00587c"
         android:gravity="center"
         android:layout_marginTop="10dp"
         android:padding="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="200dp"/>
     <com.google.android.material.textfield.TextInputLayout
         app:layout_constraintTop_toBottomOf="@id/txt_dangnhap"
         android:layout_marginTop="5dp"
@@ -30,8 +30,10 @@
             android:id="@+id/email"
             android:hint="Email"
             android:inputType="textEmailAddress"
+            android:elevation="3dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:background="@drawable/edittext_background"
             android:drawableLeft="@drawable/ic_email"
             android:drawablePadding="5dp"
             android:layout_width="match_parent"
@@ -51,6 +53,8 @@
             android:hint="Password"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:elevation="3dp"
+            android:background="@drawable/edittext_background"
             android:inputType="textPassword"
             android:drawableLeft="@drawable/baseline_key_24"
             android:drawablePadding="5dp"
@@ -66,7 +70,7 @@
         android:textColor="@color/white"
         android:layout_marginRight="25dp"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:text="Đăng nhập"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -76,12 +80,15 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:orientation="horizontal"
+        android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/btn_dangnhap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
             android:text="Nếu chưa có tài khoản?"
             android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
@@ -98,7 +105,7 @@
         app:layout_constraintTop_toBottomOf="@id/line6"
         android:layout_marginTop="15dp"
         android:text="Quên mật khẩu"
-        android:textColor="@color/color_text"
+        android:textColor="@color/black"
         android:textSize="15sp"
         android:gravity="center"
         android:id="@+id/txt_resetpass"

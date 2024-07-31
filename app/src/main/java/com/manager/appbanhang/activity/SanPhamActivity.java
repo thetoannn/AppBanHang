@@ -44,7 +44,7 @@ public class SanPhamActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_dien_thoai);
+        setContentView(R.layout.activity_san_pham);
         apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
 
         loai = getIntent().getIntExtra("loai", 1);

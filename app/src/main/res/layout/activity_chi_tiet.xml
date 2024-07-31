@@ -9,8 +9,9 @@
     android:fitsSystemWindows="true">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:background="#3AD541"
+        android:background="@drawable/side_toolbar"
         app:title="Thông tin chi tiết"
+        app:titleTextColor="@color/white"
         app:layout_constraintBaseline_toTopOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
@@ -28,7 +29,7 @@
                 android:layout_height="28dp"/>
             <ImageView
                 android:layout_marginTop="15dp"
-                android:src="@drawable/ic_cart_24"
+                android:src="@drawable/ic_cart"
                 android:layout_width="35dp"
                 android:layout_height="35dp"/>
         </FrameLayout>
