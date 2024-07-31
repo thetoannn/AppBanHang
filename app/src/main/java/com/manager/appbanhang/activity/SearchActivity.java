@@ -14,7 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.manager.appbanhang.R;
-import com.manager.appbanhang.adapter.DienThoaiAdapter;
+import com.manager.appbanhang.adapter.SanPhamAdapter;
+import com.manager.appbanhang.adapter.SanPhamAdapter;
 import com.manager.appbanhang.model.SanPhamMoi;
 import com.manager.appbanhang.retrofit.ApiBanHang;
 import com.manager.appbanhang.retrofit.RetrofitClient;
@@ -31,7 +32,7 @@ public class SearchActivity extends AppCompatActivity {
     Toolbar toolbar;
     RecyclerView recyclerView;
     EditText edt_search;
-    DienThoaiAdapter adapterDienThoai;
+    SanPhamAdapter adapterSanPham;
     List<SanPhamMoi> sanPhamMoiList;
     ApiBanHang apiBanHang;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -65,8 +66,8 @@ public class SearchActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.length() == 0) {
                     sanPhamMoiList.clear();
-                    adapterDienThoai = new DienThoaiAdapter(getApplicationContext(), sanPhamMoiList);
-                    recyclerView.setAdapter(adapterDienThoai);
+                    adapterSanPham = new SanPhamAdapter(getApplicationContext(), sanPhamMoiList);
+                    recyclerView.setAdapter(adapterSanPham);
                 } else {
                     getDataSearch(charSequence.toString());
                 }
@@ -90,8 +91,8 @@ public class SearchActivity extends AppCompatActivity {
                         sanPhamMoiModel -> {
                             if (sanPhamMoiModel.isSuccess()) {
                                 sanPhamMoiList = sanPhamMoiModel.getResult();
-                                adapterDienThoai = new DienThoaiAdapter(getApplicationContext(), sanPhamMoiList);
-                                recyclerView.setAdapter(adapterDienThoai);
+                                adapterSanPham = new SanPhamAdapter(getApplicationContext(), sanPhamMoiList);
+                                recyclerView.setAdapter(adapterSanPham);
                             }
                         },
                         throwable -> {

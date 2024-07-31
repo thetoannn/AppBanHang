@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.manager.appbanhang.R;
-import com.manager.appbanhang.adapter.DienThoaiAdapter;
+import com.manager.appbanhang.adapter.SanPhamAdapter;
 import com.manager.appbanhang.model.SanPhamMoi;
 import com.manager.appbanhang.retrofit.ApiBanHang;
 import com.manager.appbanhang.retrofit.RetrofitClient;
@@ -34,7 +34,7 @@ public class DienThoaiActivity extends AppCompatActivity {
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     int page = 1;
     int loai;
-    DienThoaiAdapter adapterDienThoai;
+    SanPhamAdapter sanPhamAdapter;
     List<SanPhamMoi> sanPhamMoiList;
     LinearLayoutManager linearLayoutManager;
     Handler handler = new Handler();
@@ -80,7 +80,7 @@ public class DienThoaiActivity extends AppCompatActivity {
             public void run() {
                 // add null
                 sanPhamMoiList.add(null);
-                adapterDienThoai.notifyItemInserted(sanPhamMoiList.size() - 1);
+                sanPhamAdapter.notifyItemInserted(sanPhamMoiList.size() - 1);
             }
         });
         handler.postDelayed(new Runnable() {
@@ -88,10 +88,10 @@ public class DienThoaiActivity extends AppCompatActivity {
             public void run() {
                 // remover null
                 sanPhamMoiList.remove(sanPhamMoiList.size() - 1);
-                adapterDienThoai.notifyItemRemoved(sanPhamMoiList.size());
+                sanPhamAdapter.notifyItemRemoved(sanPhamMoiList.size());
                 page = page + 1;
                 getData(page);
-                adapterDienThoai.notifyDataSetChanged();
+                sanPhamAdapter.notifyDataSetChanged();
                 isLoading = false;
             }
         }, 2000);
@@ -104,17 +104,17 @@ public class DienThoaiActivity extends AppCompatActivity {
                 .subscribe(
                         sanPhamMoiModel -> {
                             if (sanPhamMoiModel.isSuccess()) {
-                                if (adapterDienThoai == null) {
+                                if (sanPhamAdapter == null) {
                                     sanPhamMoiList = sanPhamMoiModel.getResult();
-                                    adapterDienThoai = new DienThoaiAdapter(getApplicationContext(), sanPhamMoiList);
-                                    recyclerView.setAdapter(adapterDienThoai);
+                                    sanPhamAdapter = new SanPhamAdapter(getApplicationContext(), sanPhamMoiList);
+                                    recyclerView.setAdapter(sanPhamAdapter);
                                 } else {
                                     int vitri = sanPhamMoiList.size() - 1;
                                     int soluongadd = sanPhamMoiModel.getResult().size();
                                     for (int i = 0; i < soluongadd; i++) {
                                         sanPhamMoiList.add(sanPhamMoiModel.getResult().get(i));
                                     }
-                                    adapterDienThoai.notifyItemRangeInserted(vitri, soluongadd);
+                                    sanPhamAdapter.notifyItemRangeInserted(vitri, soluongadd);
                                 }
                             }
                             else {

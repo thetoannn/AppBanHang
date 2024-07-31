@@ -8,10 +8,15 @@ import com.manager.appbanhang.model.MessageModel;
 import com.manager.appbanhang.model.SanPhamMoiModel;
 import com.manager.appbanhang.model.UserModel;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface ApiBanHang {
     @GET("getloaisp.php")
@@ -72,6 +77,12 @@ public interface ApiBanHang {
             @Field("search") String search
     );
 
+    @POST("xoa.php")
+    @FormUrlEncoded
+    Observable<MessageModel> xoaSanPham(
+            @Field("id") int id
+    );
+
     @POST("insertsp.php")
     @FormUrlEncoded
     Observable<MessageModel> insertSp(
@@ -81,4 +92,19 @@ public interface ApiBanHang {
             @Field("mota") String mota,
             @Field("loai") int loai
     );
+
+    @POST("udpdatesp.php")
+    @FormUrlEncoded
+    Observable<MessageModel> updateSp(
+            @Field("tensp") String tensp,
+            @Field("gia") String gia,
+            @Field("hinhanh") String hinhanh,
+            @Field("mota") String mota,
+            @Field("loai") int loai,
+            @Field("id") int id
+    );
+
+    @Multipart
+    @POST("upload.php")
+    Call<MessageModel> uploadFile(@Part MultipartBody.Part file);
 }

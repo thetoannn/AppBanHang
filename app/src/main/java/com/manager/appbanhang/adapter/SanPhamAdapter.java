@@ -17,17 +17,18 @@ import com.manager.appbanhang.Interface.ItemClickListener;
 import com.manager.appbanhang.R;
 import com.manager.appbanhang.activity.ChiTietActivity;
 import com.manager.appbanhang.model.SanPhamMoi;
+import com.manager.appbanhang.utils.Utils;
 
 import java.text.DecimalFormat;
 import java.util.List;
 
-public class DienThoaiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SanPhamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
     List<SanPhamMoi> array;
     private static final int VIEW_TYPE_DATA = 0;
     private static final int VIEW_TYPE_LOADING = 1;
 
-    public DienThoaiAdapter(Context context, List<SanPhamMoi> array) {
+    public SanPhamAdapter(Context context, List<SanPhamMoi> array) {
         this.context = context;
         this.array = array;
     }
@@ -53,7 +54,12 @@ public class DienThoaiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
             myViewHolder.giasp.setText("Giá: " + decimalFormat.format(Double.parseDouble(sanPhamMoi.getGiasp())) + "Đ");
             myViewHolder.mota.setText(sanPhamMoi.getMota());
-            Glide.with(context).load(sanPhamMoi.getHinhanh()).into(myViewHolder.hinhanh);
+            if (sanPhamMoi.getHinhanh().contains("http")) {
+                Glide.with(context).load(sanPhamMoi.getHinhanh()).into(((MyViewHolder) holder).hinhanh);
+            } else {
+                String hinh = Utils.BASE_URL + "images/" + sanPhamMoi.getHinhanh();
+                Glide.with(context).load(hinh).into(((MyViewHolder) holder).hinhanh);
+            }
             myViewHolder.setItemClickListener(new ItemClickListener() {
                 @Override
                 public void onClick(View view, int pos, boolean isLongClick) {

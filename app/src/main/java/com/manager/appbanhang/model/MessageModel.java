@@ -5,6 +5,15 @@ import java.util.List;
 public class MessageModel {
     boolean success;
     String message;
+    String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public boolean isSuccess() {
         return success;
