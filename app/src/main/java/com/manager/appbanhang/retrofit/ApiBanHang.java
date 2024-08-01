@@ -40,7 +40,6 @@ public interface ApiBanHang {
             @Field("username") String username,
             @Field("phone") String phone,
             @Field("uid") String uid
-
     );
 
     @POST("dangnhap.php")

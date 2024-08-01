@@ -81,7 +81,11 @@ public class DangKyActivity extends AppCompatActivity {
                                         postData(str_email, str_password, str_username, str_phone, user.getUid());
                                     }
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "Email đã tồn tại hoặc không thành công", Toast.LENGTH_LONG).show();
+                                    String errorMessage = "Email đã tồn tại hoặc không thành công";
+                                    if (task.getException() != null) {
+                                        errorMessage = task.getException().getMessage();
+                                    }
+                                    Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
                                 }
                             }
                         });
