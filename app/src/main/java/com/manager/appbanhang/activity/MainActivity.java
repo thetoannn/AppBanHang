@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     NotificationBadge badge;
     FrameLayout frameLayout;
     ImageView img_search;
+    String role;
 
 
 
@@ -81,14 +82,18 @@ public class MainActivity extends AppCompatActivity {
             User user = Paper.book().read("user");
             Utils.user_current = user;
         }
-        getToken();
         Anhxa();
         ActionBar();
+        role = getIntent().getStringExtra("user_role");
         
         if (isConnected(this)) {
-
+            if ("admin".equals(role)) {
+                getLoaiSanPhamAdmin();
+            } else {
+                getLoaiSanPhamUser();
+            }
             ActionViewFlipper();
-            getLoaiSanPham();
+//            getLoaiSanPham();
             getSpMoi();
             getEventClick();
         } else {
@@ -96,73 +101,128 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getToken() {
-        FirebaseMessaging.getInstance().getToken()
-                .addOnSuccessListener(new OnSuccessListener<String>() {
-                    @Override
-                    public void onSuccess(String s) {
-                        if (!TextUtils.isEmpty(s)) {
-//                            Log.d("Token", "Token: " + s); // In token ra console
-                            compositeDisposable.add(apiBanHang.updateToken(Utils.user_current.getId(), s)
-                                    .subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(
-                                            messageModel -> {
-                                                // Token updated successfully
-                                                Log.d("Token", "Token saved successfully");
-                                            },
-                                            throwable -> {
-                                                Log.d("Token", "Failed to save token: " + throwable.getMessage());
-                                            }
-                                    ));
-                        } else {
-                            Log.d("Token", "Received empty token");
+    private void getLoaiSanPhamUser() {
+        compositeDisposable.add(apiBanHang.getLoaiSp()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        loaiSpModel -> {
+                            if (loaiSpModel.isSuccess()) {
+                                mangloaisp = loaiSpModel.getResult();
+                                mangloaisp.add(new LoaiSp("Đăng xuất", ""));
+                                loaiSpAdapter = new LoaiSpAdapter(getApplicationContext(), mangloaisp);
+                                listViewManHinhChinh.setAdapter(loaiSpAdapter);
+                            }
                         }
-                    }
-                });
+                ));
+    }
+
+    private void getLoaiSanPhamAdmin() {
+        compositeDisposable.add(apiBanHang.getLoaiSp()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        loaiSpModel -> {
+                            if (loaiSpModel.isSuccess()) {
+                                mangloaisp = loaiSpModel.getResult();
+                                mangloaisp.removeIf(loaiSp -> "Trang chủ".equals(loaiSp.getTensanpham()));
+                                mangloaisp.removeIf(loaiSp -> "Điện thoại".equals(loaiSp.getTensanpham()));
+                                mangloaisp.removeIf(loaiSp -> "Laptop".equals(loaiSp.getTensanpham()));
+                                mangloaisp.removeIf(loaiSp -> "Thông tin".equals(loaiSp.getTensanpham()));
+                                mangloaisp.removeIf(loaiSp -> "Liên hệ".equals(loaiSp.getTensanpham()));
+                                mangloaisp.removeIf(loaiSp -> "Đơn hàng".equals(loaiSp.getTensanpham()));
+                                mangloaisp.add(new LoaiSp("Quản lý", ""));
+                                mangloaisp.add(new LoaiSp("Đăng xuất", ""));
+                                loaiSpAdapter = new LoaiSpAdapter(getApplicationContext(), mangloaisp);
+                                listViewManHinhChinh.setAdapter(loaiSpAdapter);
+                            }
+                        }
+                ));
     }
 
 
-    private void getEventClick() {
-        listViewManHinhChinh.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                switch (i){
-                    case 0:
-                        Intent trangchu = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(trangchu);
-                        break;
-                    case 1:
-                        Intent dienthoai = new Intent(getApplicationContext(), SanPhamActivity.class);
-                        dienthoai.putExtra("loai", 1);
-                        startActivity(dienthoai);
-                        break;
-                    case 2:
-                        Intent laptop = new Intent(getApplicationContext(), SanPhamActivity.class);
-                        laptop.putExtra("loai", 2);
-                        startActivity(laptop);
-                        break;
-                    case 5:
-                        Intent donhang = new Intent(getApplicationContext(), XemDonActivity.class);
-                        startActivity(donhang);
-                        break;
-                    case 6:
-                        Intent quanli = new Intent(getApplicationContext(), QuanLyActivity.class);
-                        startActivity(quanli);
-                        finish();
-                        break;
-                    case 7:
-                        // xoa key user
-                        Paper.book().delete("user");
-                        FirebaseAuth.getInstance().signOut();
-                        Intent dangxuat = new Intent(getApplicationContext(), DangNhapActivity.class);
-                        startActivity(dangxuat);
-                        finish();
-                        break;
-                }
+//    private void getEventClick() {
+//        listViewManHinhChinh.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                switch (i){
+//                    case 0:
+//                        Intent trangchu = new Intent(getApplicationContext(), MainActivity.class);
+//                        startActivity(trangchu);
+//                        break;
+//                    case 1:
+//                        Intent dienthoai = new Intent(getApplicationContext(), SanPhamActivity.class);
+//                        dienthoai.putExtra("loai", 1);
+//                        startActivity(dienthoai);
+//                        break;
+//                    case 2:
+//                        Intent laptop = new Intent(getApplicationContext(), SanPhamActivity.class);
+//                        laptop.putExtra("loai", 2);
+//                        startActivity(laptop);
+//                        break;
+//                    case 5:
+//                        Intent donhang = new Intent(getApplicationContext(), XemDonActivity.class);
+//                        startActivity(donhang);
+//                        break;
+//                    case 6:
+//                        Intent quanli = new Intent(getApplicationContext(), QuanLyActivity.class);
+//                        startActivity(quanli);
+//                        finish();
+//                        break;
+//                    case 7:
+//                        // xoa key user
+//                        Paper.book().delete("user");
+//                        Intent dangxuat = new Intent(getApplicationContext(), DangNhapActivity.class);
+//                        startActivity(dangxuat);
+//                        finish();
+//                        break;
+//                }
+//            }
+//        });
+//    }
+private void getEventClick() {
+    listViewManHinhChinh.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            LoaiSp loaiSp = mangloaisp.get(i);
+            switch (loaiSp.getTensanpham()) {
+                case "Trang chủ":
+                    Intent trangchu = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(trangchu);
+                    break;
+                case "Điện thoại":
+                    Intent dienthoai = new Intent(getApplicationContext(), SanPhamActivity.class);
+                    dienthoai.putExtra("loai", 1);
+                    startActivity(dienthoai);
+                    break;
+                case "Laptop":
+                    Intent laptop = new Intent(getApplicationContext(), SanPhamActivity.class);
+                    laptop.putExtra("loai", 2);
+                    startActivity(laptop);
+                    break;
+                case "Đơn hàng":
+                    Intent donhang = new Intent(getApplicationContext(), XemDonActivity.class);
+                    startActivity(donhang);
+                    break;
+                case "Quản lý":
+                    Intent quanli = new Intent(getApplicationContext(), QuanLyActivity.class);
+                    startActivity(quanli);
+                    finish();
+                    break;
+                case "Đăng xuất":
+                    // xóa key user
+                    Paper.book().delete("user");
+                    Intent dangxuat = new Intent(getApplicationContext(), DangNhapActivity.class);
+                    startActivity(dangxuat);
+                    finish();
+                    break;
+                default:
+                    break;
             }
-        });
-    }
+        }
+    });
+}
+
 
     private void getSpMoi() {
         compositeDisposable.add(apiBanHang.getSpMoi()

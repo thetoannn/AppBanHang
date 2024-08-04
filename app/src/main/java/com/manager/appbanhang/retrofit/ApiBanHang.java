@@ -38,15 +38,15 @@ public interface ApiBanHang {
             @Field("email") String email,
             @Field("pass") String pass,
             @Field("username") String username,
-            @Field("phone") String phone,
-            @Field("uid") String uid
+            @Field("phone") String phone
     );
 
     @POST("dangnhap.php")
     @FormUrlEncoded
     Observable<UserModel> dangNhap(
             @Field("email") String email,
-            @Field("pass") String pass);
+            @Field("pass") String pass
+    );
 
     @POST("reset.php")
     @FormUrlEncoded
@@ -105,14 +105,17 @@ public interface ApiBanHang {
             @Field("id") int id
     );
 
-    @POST("updatetoken.php")
-    @FormUrlEncoded
-    Observable<MessageModel> updateToken(
-            @Field("id") int id,
-            @Field("token") String token
-    );
-
     @Multipart
     @POST("upload.php")
     Call<MessageModel> uploadFile(@Part MultipartBody.Part file);
+
+    @POST("adduser.php")
+    @FormUrlEncoded
+    Observable<UserModel> addUser(
+            @Field("email") String email,
+            @Field("pass") String pass,
+            @Field("username") String username,
+            @Field("phone") String phone,
+            @Field("role") String role // Thêm vai trò người dùng
+    );
 }

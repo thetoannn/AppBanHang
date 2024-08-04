@@ -20,9 +20,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.manager.appbanhang.R;
+import com.manager.appbanhang.model.User;
 import com.manager.appbanhang.retrofit.ApiBanHang;
 import com.manager.appbanhang.retrofit.RetrofitClient;
 import com.manager.appbanhang.utils.Utils;
+
+import java.util.List;
 
 import io.paperdb.Paper;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -33,8 +36,6 @@ public class DangNhapActivity extends AppCompatActivity {
     TextView txt_dangky, txt_resetpass;
     EditText email, password;
     AppCompatButton button_dangnhap;
-    FirebaseAuth firebaseAuth;
-    FirebaseUser user;
     ApiBanHang apiBanHang;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     boolean isLogin = false;
@@ -79,21 +80,7 @@ public class DangNhapActivity extends AppCompatActivity {
                     // save
                     Paper.book().write("email", str_email);
                     Paper.book().write("password", str_password);
-                    if (user != null) {
-                        // user da co dang nhap firebase
-                        dangNhap(str_email, str_password);
-                    } else {
-                        // user da signout
-                        firebaseAuth.signInWithEmailAndPassword(str_email, str_password)
-                                .addOnCompleteListener(DangNhapActivity.this, new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (task.isSuccessful()) {
-                                            dangNhap(str_email, str_password);
-                                        }
-                                    }
-                                });
-                    }
+                    dangNhap(str_email, str_password);
                 }
             }
         });
@@ -107,8 +94,6 @@ public class DangNhapActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         button_dangnhap = findViewById(R.id.btn_dangnhap);
-        firebaseAuth = FirebaseAuth.getInstance();
-        user = firebaseAuth.getCurrentUser();
 
         // read data
         if (Paper.book().read("email") != null && Paper.book().read("password") != null) {
@@ -135,15 +120,23 @@ public class DangNhapActivity extends AppCompatActivity {
                 .subscribe(
                         userModel -> {
                             if (userModel.isSuccess()) {
-                                isLogin = true;
-                                Paper.book().write("isLogin", isLogin);
+                                List<User> result = userModel.getResult();
+                                if (result != null && !result.isEmpty()) {
+                                    isLogin = true;
+                                    Paper.book().write("isLogin", isLogin);
+                                    Utils.user_current = result.get(0);
+                                    Paper.book().write("user", result.get(0));
+                                    String role = result.get(0).getRole();
 
-                                Utils.user_current = userModel.getResult().get(0);
-                                // luu lai thong tin nguoi dung
-                                Paper.book().write("user", userModel.getResult().get(0));
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(intent);
-                                finish();
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    intent.putExtra("user_role", role); // Gửi vai trò tới MainActivity
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Không tìm thấy người dùng", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Mật khẩu không đúng", Toast.LENGTH_SHORT).show();
                             }
                         },
                         throwable -> {
@@ -151,6 +144,7 @@ public class DangNhapActivity extends AppCompatActivity {
                         }
                 ));
     }
+
 
     @Override
     protected void onResume() {
